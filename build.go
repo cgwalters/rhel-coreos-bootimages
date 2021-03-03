@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+
 func run(src, dest string) error {
 	var cm map[string]interface{}
 	b, err := ioutil.ReadFile(src)
@@ -19,17 +20,12 @@ func run(src, dest string) error {
 		return err
 	}
 
-	var bootimages map[string]interface{}
-	b, err = ioutil.ReadFile("rhcos-4.8.json")
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(b, &bootimages)
+	bootimages, err := ioutil.ReadFile("rhcos-4.8.json")
 	if err != nil {
 		return err
 	}
 	data := cm["data"].(map[string]interface{})
-	data["stream"] = bootimages
+	data["stream"] = string(bootimages)
 
 	b, err = json.Marshal(cm)
 	if err != nil {

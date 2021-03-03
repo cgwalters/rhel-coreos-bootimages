@@ -1,6 +1,6 @@
 manifestsdir := $(DESTDIR)/manifests
 
-coreos-bootimages.json.generated: manifests/coreos-bootimages.json
+coreos-bootimages.json.generated: manifests/coreos-bootimages.json build.go 
 	go run build.go $< $@.tmp && mv $@.tmp $@
 
 all: coreos-bootimages.json.generated
